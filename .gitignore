@@ -1,0 +1,34 @@
+# Generated .NET / Visual Studio files
+bin/
+obj/
+.vs/
+TestResults/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Packaging outputs: keep release installers outside the source repository
+publish/
+msi-build-*/
+validation/
+*.msi
+*.msix
+*.msixbundle
+*.appx
+*.appxbundle
+
+# Local diagnostics, temporary data and credentials
+last-error.txt
+settings.json
+*.log
+*.tmp
+*.bak
+.env
+.env.*
+!.env.example
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini

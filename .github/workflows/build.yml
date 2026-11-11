@@ -1,0 +1,56 @@
+name: EriMixer Windows build
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compile-and-package:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore dependencies
+        run: dotnet restore EriMixer.csproj
+      - name: Build
+        run: dotnet build EriMixer.csproj -c Release --no-restore
+      - name: Publish portable application
+        run: dotnet publish EriMixer.csproj -c Release --no-restore --self-contained false -o published
+      - name: Prepare release output folder
+        run: New-Item -ItemType Directory -Force release | Out-Null
+      - name: Build per-user x64 MSI
+        shell: pwsh
+        run: .\Build-Installer.ps1 -Payload .\published -Output .\release\EriMixer-0.3.0-x64.msi
+      - name: Validate MSI database and payload
+        shell: pwsh
+        run: .\Validate-Installer.ps1 -Package .\release\EriMixer-0.3.0-x64.msi -Manifest .\release\EriMixer-0.3.0-x64.msi.manifest.json -Destination .\validation
+      - name: Create portable ZIP and SHA-256 checksums
+        shell: pwsh
+        run: |
+          Compress-Archive -Path published\* -DestinationPath release\EriMixer-0.3.0-portable-x64.zip -CompressionLevel Optimal
+          $artifacts = Get-ChildItem release -File | Where-Object { $_.Extension -in '.msi', '.zip' }
+          $lines = foreach ($artifact in $artifacts) {
+            $hash = (Get-FileHash -LiteralPath $artifact.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+            "$hash  $($artifact.Name)"
+          }
+          $lines | Set-Content -LiteralPath release\SHA256SUMS.txt -Encoding ascii
+          Remove-Item release\*.manifest.json
+      - name: Save release candidate packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: EriMixer-0.3.0-rc.1-windows-x64
+          path: release/*
+          retention-days: 30

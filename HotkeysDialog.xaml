@@ -1,0 +1,139 @@
+<Window x:Class="EriMixer.HotkeysDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="EriMixer · Hot Keys"
+        Width="555" Height="470"
+        MinWidth="555" MinHeight="470"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize" ShowInTaskbar="False"
+        Background="{DynamicResource ThemeDialogBackground}" Foreground="{DynamicResource ThemeText}" FontFamily="Segoe UI"
+        PreviewKeyDown="Window_PreviewKeyDown">
+ <Window.Resources>
+  <Style x:Key="HotkeyToggleStyle" TargetType="{x:Type CheckBox}">
+   <Setter Property="Cursor" Value="Hand"/>
+   <Setter Property="VerticalAlignment" Value="Center"/>
+   <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+   <Setter Property="Template"><Setter.Value>
+    <ControlTemplate TargetType="{x:Type CheckBox}">
+     <Border x:Name="ToggleBorder" Background="{DynamicResource ThemeToggleBackground}" BorderBrush="{DynamicResource ThemeToggleBorder}"
+             BorderThickness="1" Width="22" Height="22" CornerRadius="5">
+      <Path x:Name="Tick" Data="M3,10 L8,15 L18,4"
+            Stroke="{DynamicResource ThemeTextOnAccent}" StrokeThickness="2.5"
+            StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+            Visibility="Collapsed" Margin="1"/>
+     </Border>
+     <ControlTemplate.Triggers>
+      <Trigger Property="IsChecked" Value="True">
+       <Setter TargetName="ToggleBorder" Property="Background" Value="{DynamicResource ThemeAccent}"/>
+       <Setter TargetName="ToggleBorder" Property="BorderBrush" Value="{DynamicResource ThemeAccentLight}"/>
+       <Setter TargetName="Tick" Property="Visibility" Value="Visible"/>
+      </Trigger>
+      <Trigger Property="IsMouseOver" Value="True">
+       <Setter TargetName="ToggleBorder" Property="BorderBrush" Value="{DynamicResource ThemeAccentLight}"/>
+      </Trigger>
+     </ControlTemplate.Triggers>
+    </ControlTemplate>
+   </Setter.Value></Setter>
+  </Style>
+  <Style x:Key="HotkeyCaptureStyle" TargetType="{x:Type Button}">
+   <Setter Property="Background" Value="{DynamicResource ThemeInputBackground}"/>
+   <Setter Property="Foreground" Value="{DynamicResource ThemeText}"/>
+   <Setter Property="BorderBrush" Value="{DynamicResource ThemeInputBorder}"/>
+   <Setter Property="BorderThickness" Value="1"/>
+   <Setter Property="Cursor" Value="Hand"/>
+   <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+   <Setter Property="Padding" Value="10,8"/>
+   <Setter Property="Template"><Setter.Value>
+    <ControlTemplate TargetType="{x:Type Button}">
+     <Border x:Name="Surface" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+             BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+      <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+     </Border>
+     <ControlTemplate.Triggers>
+      <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{DynamicResource ThemeAccent}"/></Trigger>
+      <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Surface" Property="BorderBrush" Value="{DynamicResource ThemeAccentLight}"/></Trigger>
+      <Trigger Property="IsPressed" Value="True"><Setter TargetName="Surface" Property="Opacity" Value="0.8"/></Trigger>
+     </ControlTemplate.Triggers>
+    </ControlTemplate>
+   </Setter.Value></Setter>
+  </Style>
+ </Window.Resources>
+ <Border Margin="12" Background="{DynamicResource ThemeDialogPanelBackground}" CornerRadius="14" BorderBrush="{DynamicResource ThemeDialogBorder}" BorderThickness="1" Padding="21">
+  <Grid>
+   <Grid.RowDefinitions>
+    <RowDefinition Height="Auto"/>
+    <RowDefinition Height="Auto"/>
+    <RowDefinition Height="Auto"/>
+    <RowDefinition Height="*"/>
+    <RowDefinition Height="Auto"/>
+   </Grid.RowDefinitions>
+
+   <StackPanel Grid.Row="0" Margin="0,0,0,15">
+    <TextBlock Text="HOT KEYS" FontWeight="SemiBold" FontSize="10" Foreground="{DynamicResource ThemeAccentLight}"/>
+    <TextBlock Text="Make EriMixer yours." FontSize="22" FontWeight="SemiBold" Margin="0,5,0,0"/>
+    <TextBlock Text="Enable the shortcuts you use. Leave the rest unbound."
+               Foreground="{DynamicResource ThemeSecondaryText}" FontSize="12" Margin="0,5,0,0" TextWrapping="Wrap"/>
+   </StackPanel>
+
+   <StackPanel Grid.Row="1">
+    <Border Background="{DynamicResource ThemeDialogCardBackground}" CornerRadius="10" BorderBrush="{DynamicResource ThemeDialogCardBorder}" BorderThickness="1" Margin="0,0,0,8" Padding="13,11">
+     <Grid>
+      <Grid.ColumnDefinitions><ColumnDefinition Width="35"/><ColumnDefinition Width="*"/><ColumnDefinition Width="164"/></Grid.ColumnDefinitions>
+      <CheckBox x:Name="InputEnabled" Tag="Input" Grid.Column="0" Style="{StaticResource HotkeyToggleStyle}"
+                Checked="Enabled_Changed" Unchecked="Enabled_Changed"
+                AutomationProperties.Name="Enable cycle input devices shortcut"/>
+      <StackPanel Grid.Column="1" VerticalAlignment="Center">
+       <TextBlock Text="Input devices" FontSize="14" FontWeight="SemiBold"/>
+       <TextBlock Text="Cycle microphones" FontSize="11" Foreground="{DynamicResource ThemeSecondaryText}" Margin="0,3,0,0"/>
+      </StackPanel>
+      <Button x:Name="InputBindButton" Tag="Input" Grid.Column="2" Style="{StaticResource HotkeyCaptureStyle}"
+              Click="Capture_Click" AutomationProperties.Name="Set input device hotkey"/>
+     </Grid>
+    </Border>
+
+    <Border Background="{DynamicResource ThemeDialogCardBackground}" CornerRadius="10" BorderBrush="{DynamicResource ThemeDialogCardBorder}" BorderThickness="1" Margin="0,0,0,8" Padding="13,11">
+     <Grid>
+      <Grid.ColumnDefinitions><ColumnDefinition Width="35"/><ColumnDefinition Width="*"/><ColumnDefinition Width="164"/></Grid.ColumnDefinitions>
+      <CheckBox x:Name="OutputEnabled" Tag="Output" Grid.Column="0" Style="{StaticResource HotkeyToggleStyle}"
+                Checked="Enabled_Changed" Unchecked="Enabled_Changed"
+                AutomationProperties.Name="Enable cycle output devices shortcut"/>
+      <StackPanel Grid.Column="1" VerticalAlignment="Center">
+       <TextBlock Text="Output devices" FontSize="14" FontWeight="SemiBold"/>
+       <TextBlock Text="Cycle speakers and headphones" FontSize="11" Foreground="{DynamicResource ThemeSecondaryText}" Margin="0,3,0,0"/>
+      </StackPanel>
+      <Button x:Name="OutputBindButton" Tag="Output" Grid.Column="2" Style="{StaticResource HotkeyCaptureStyle}"
+              Click="Capture_Click" AutomationProperties.Name="Set output device hotkey"/>
+     </Grid>
+    </Border>
+
+    <Border Background="{DynamicResource ThemeDialogCardBackground}" CornerRadius="10" BorderBrush="{DynamicResource ThemeDialogCardBorder}" BorderThickness="1" Padding="13,11">
+     <Grid>
+      <Grid.ColumnDefinitions><ColumnDefinition Width="35"/><ColumnDefinition Width="*"/><ColumnDefinition Width="164"/></Grid.ColumnDefinitions>
+      <CheckBox x:Name="PopupEnabled" Tag="Popup" Grid.Column="0" Style="{StaticResource HotkeyToggleStyle}"
+                Checked="Enabled_Changed" Unchecked="Enabled_Changed"
+                AutomationProperties.Name="Enable open popup shortcut"/>
+      <StackPanel Grid.Column="1" VerticalAlignment="Center">
+       <TextBlock Text="Open popup window" FontSize="14" FontWeight="SemiBold"/>
+       <TextBlock Text="Show EriMixer anywhere" FontSize="11" Foreground="{DynamicResource ThemeSecondaryText}" Margin="0,3,0,0"/>
+      </StackPanel>
+      <Button x:Name="PopupBindButton" Tag="Popup" Grid.Column="2" Style="{StaticResource HotkeyCaptureStyle}"
+              Click="Capture_Click" AutomationProperties.Name="Set popup hotkey"/>
+     </Grid>
+    </Border>
+   </StackPanel>
+
+   <StackPanel Grid.Row="2" Margin="0,15,0,0">
+    <TextBlock Text="Click a key field, then press your shortcut. Single keys are supported too."
+               FontSize="11" Foreground="{DynamicResource ThemeQuietText}" TextWrapping="Wrap"/>
+    <TextBlock x:Name="StatusText" Text="" Visibility="Collapsed"
+               FontSize="12" Foreground="{DynamicResource ThemeAccentLight}" TextWrapping="Wrap" Margin="0,9,0,0"/>
+   </StackPanel>
+
+   <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+    <Button Content="Cancel" Padding="16,9" Margin="0,0,9,0" Click="Cancel_Click" IsCancel="True"/>
+    <Button Content="Save changes" Padding="16,9" Click="Save_Click" Foreground="{DynamicResource ThemeTextOnAccent}"
+            Background="{DynamicResource ThemeDialogSave}" BorderBrush="{DynamicResource ThemeAccent}" FontWeight="SemiBold" IsDefault="True"/>
+   </StackPanel>
+  </Grid>
+ </Border>
+</Window>
