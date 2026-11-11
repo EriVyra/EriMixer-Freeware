@@ -12,7 +12,7 @@
 
 EriMixer brings per-application volume, default audio-device controls, and quick shortcuts into one focused Windows utility. It is freeware: all features are included, with no ads or telemetry. Ko-fi support is optional.
 
-> **Release status:** The v0.3.0 release candidate passed Windows CI, including MSI and portable package checks. Public installer downloads will be linked on the [Releases page](https://github.com/EriVyra/EriMixer-Freeware/releases) when a release is published.
+> **Release status:** EriMixer v0.3.0 Release Candidate 1 is available on the [release download page](https://github.com/EriVyra/EriMixer-Freeware/releases/tag/v0.3.0-rc.1).
 
 ## Why EriMixer
 
