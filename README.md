@@ -1,40 +1,57 @@
-# EriMixer 0.3.0
+# EriMixer
 
-EriMixer is a small Windows audio control centre. It is freeware, with no feature restrictions, subscriptions, advertisements or telemetry. Optional Ko-fi donations: [Support EriVyra](https://ko-fi.com/erivyra).
+**A lightweight Windows 11 per-app volume mixer with global hotkeys, audio device selection, compact popup mode, and custom themes.**
 
-## Downloads
+<p align="center">
+  <a href="https://github.com/EriVyra/EriMixer-Freeware/releases"><img src="Assets/download-button.svg" alt="Download EriMixer from GitHub Releases"></a>
+</p>
 
-The Windows x64 release candidate provides:
+<p align="center">
+  <img src="Assets/EriMixer-screenshot.jpg" alt="EriMixer showing per-app volume controls and input/output device selectors" width="405">
+</p>
 
-- **Installer:** `EriMixer-0.3.0-x64.msi` — per-user installation, Start menu shortcut, and upgrade support from v0.2.0.
-- **Portable:** `EriMixer-0.3.0-portable-x64.zip` — extract to a folder and run `EriMixer.exe`.
-- **Checksums:** `SHA256SUMS.txt` — SHA-256 values for both downloads.
+EriMixer brings per-application volume, default audio-device controls, and quick shortcuts into one focused Windows utility. It is freeware: all features are included, with no ads or telemetry. Ko-fi support is optional.
 
-Downloads require Windows 11 x64 and the **.NET 8 Desktop Runtime (x64)**. The runtime is not bundled. The MSI does not require administrator elevation and installs in the current Windows user profile.
+> **Release status:** The v0.3.0 release candidate passed Windows CI, including MSI and portable package checks. Public installer downloads will be linked on the [Releases page](https://github.com/EriVyra/EriMixer-Freeware/releases) when a release is published.
 
-## Installation and unsigned app guidance
+## Why EriMixer
 
-The MSI and application are not code-signed. Windows may show SmartScreen or publisher warnings when opening the installer. Only continue if you downloaded the file from the official EriMixer release source and its SHA-256 matches `SHA256SUMS.txt`. Choose **More info → Run anyway** only if you trust that source and have checked the hash. The warning reflects the missing publisher signature; it is not an endorsement or proof of safety.
+Windows’ built-in mixer is useful for quick level changes. EriMixer adds the controls people often need around it: switch input and output devices, cycle devices with global hotkeys, and keep a compact mixer popup close at hand. Four themes let the window fit a light or dark desktop.
 
-To install, open the MSI and follow Windows Installer. To remove it, use **Settings → Apps → Installed apps → EriMixer → Uninstall**. Your per-user settings are kept in `%LOCALAPPDATA%\EriMixer`.
+It is designed as a small, direct desktop tool. No account, subscription, feature tiers, advertisements, or telemetry are included.
 
-For portable use, extract the ZIP to a writable folder and run `EriMixer.exe`. Exit the tray copy before switching between portable and installed copies because EriMixer allows one instance per Windows session. Portable mode does not create an uninstall entry.
+## Features
 
-## What’s included
+- Adjust or mute volume for individual applications
+- Choose default input and output devices
+- Configure global hotkeys to open the mixer and cycle devices
+- Switch between a standard window and a compact popup
+- Choose from four colour themes
+- Resize the popup and use **Fit apps** to keep active controls visible
+- Use the tray icon and optionally start EriMixer with Windows
 
-- Per-application volume and mute controls
-- Input and output default-device selectors
-- Configurable global shortcuts for opening the mixer and cycling devices
-- Four selectable themes
-- Standalone and compact popup modes, with resize and Fit apps controls
-- Tray controls and optional Start with Windows
+## Install
 
-Default-device switching uses a Windows audio interface that requires manual verification on each supported Windows setup. A cycle shortcut has no visible effect when there is only one active device.
+1. Open the [Releases page](https://github.com/EriVyra/EriMixer-Freeware/releases) and download the Windows x64 MSI when it is available.
+2. Verify the MSI against the SHA-256 value in SHA256SUMS.txt.
+3. Open the MSI and follow Windows Installer. The per-user install does not require administrator elevation and supports upgrading v0.2.0.
+4. EriMixer requires the **.NET 8 Desktop Runtime (x64)**. It is not bundled with the installer.
+5. To uninstall, use **Settings → Apps → Installed apps → EriMixer → Uninstall**. Your settings remain in %LOCALAPPDATA%\EriMixer.
 
-## Privacy and support
+The MSI and app are unsigned. Windows may show a SmartScreen or unknown-publisher warning. Check the SHA-256 hash and continue only if you trust the official EriMixer release source.
 
-EriMixer includes no telemetry or advertising. Ko-fi donations are optional: [Support EriVyra](https://ko-fi.com/erivyra). There is no purchase requirement.
+## Portable version
 
-## Release status
+Download EriMixer-0.3.0-portable-x64.zip from Releases, verify its checksum, extract it to a writable folder, then run EriMixer.exe. Portable mode does not create an uninstall entry. Exit the tray copy before switching between portable and installed copies.
 
-This is a release candidate. Windows CI checks the MSI database, package contents, portable ZIP and checksums. Eri has manually verified MSI installation and upgrade, themes, hotkeys, output-device cycling and uninstall. Uninstall retains the user's settings JSON files under `%LOCALAPPDATA%\\EriMixer`. Input-device cycling remains untested because only one microphone was available. The portable ZIP launch and startup/tray checks have not been confirmed.
+## Compatibility and verification
+
+EriMixer is built for Windows 11 x64. Eri has verified MSI installation and upgrade, themes, hotkeys, output-device cycling, and uninstall. The portable build also opens successfully. Input-device cycling still needs testing with at least two microphones; with one active microphone, cycling cannot demonstrate a change. Startup and tray behavior still need end-user checks.
+
+## Support
+
+EriMixer is free to use with no purchase requirement. If you find it useful, you can optionally [support EriVyra on Ko-fi](https://ko-fi.com/erivyra).
+
+## Build from source
+
+The project targets .NET 8 WPF. Windows CI builds and validates the application, per-user x64 MSI, portable ZIP, and SHA-256 checksums. See [release notes](RELEASE_NOTES_v0.3.0.md) and the [release-candidate QA checklist](RELEASE_CANDIDATE_QA.md).

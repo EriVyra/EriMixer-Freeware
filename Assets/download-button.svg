@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="64" viewBox="0 0 360 64" role="img" aria-labelledby="title desc">
+  <title id="title">Download EriMixer</title>
+  <desc id="desc">Open the EriMixer GitHub Releases page for Windows downloads.</desc>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a83a54"/>
+      <stop offset="1" stop-color="#651d35"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="358" height="62" rx="15" fill="url(#g)"/>
+  <path d="M31 18v17m-7-7 7 7 7-7M19 42h24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="57" y="29" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="700">Download EriMixer</text>
+  <text x="57" y="48" fill="#f4dce3" font-family="Segoe UI,Arial,sans-serif" font-size="12">Windows 11 · x64 · freeware</text>
+</svg>
